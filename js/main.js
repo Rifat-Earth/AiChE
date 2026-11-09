@@ -1,8 +1,72 @@
 var REG="https://docs.google.com/forms/d/e/1FAIpQLSe4TsRj24JDkJR9QEfoZRa9eLmyfCKnRDnO3klgJDl0cn3AzQ/viewform?usp=publish-editor";
+
 document.getElementById("reg").href=REG;
 var COL=[["#0a3a68","#10a37f"],["#5b2a86","#0b5fa5"],["#b4472a","#e8a33d"],["#0d6b5a","#4fb286"],["#243b6b","#6a8fd8"],["#7a1f4d","#d86a9a"]];
-/* To use real photos: add entries here, e.g. REAL["Events 1"]="images/event1.jpg" */
-var REAL={};
+
+var SLIDE_IMG=["images/slider/slide3.jpeg","images/slider/slide4.jpeg","images/slider/slide1.jpeg"];
+
+var GALLERY={
+ "Events":[
+  "images/gallery/events/e1.jpeg",
+  "images/gallery/events/e2.jpeg",
+  "images/gallery/events/e3.jpeg"
+ ],
+ "Workshops":[
+  "images/gallery/workshops/w1.jpeg",
+  "images/gallery/workshops/w2.jpeg",
+  "images/gallery/workshops/w3.jpeg",
+  "images/gallery/workshops/w3.jpeg"
+ ],
+ "Industrial Visits":[
+  "images/gallery/industrial_visits/i1.jpeg",
+  "images/gallery/industrial_visits/i5.jpeg",
+  "images/gallery/industrial_visits/i4.jpeg",
+ "images/gallery/industrial_visits/i3.jpeg",
+  "images/gallery/industrial_visits/i2.jpeg"
+ ],
+ "Competitions":[
+  "images/gallery/competitions/c1.jpeg",
+  "images/gallery/competitions/c2.jpeg",
+  "images/gallery/competitions/c3.jpeg"
+ ],
+ "Sports":[
+  "images/gallery/sports/s5.jpeg",
+  "images/gallery/sports/s3.jpeg",
+  "images/gallery/sports/s2.jpeg",
+  "images/gallery/sports/s1.jpeg",
+  "images/gallery/sports/s8.jpeg",
+ ]
+};
+
+var REAL={
+ "Event 1":"images/olympiad/image.png",
+ "Events 2":"images/events2.jpg",
+ "Workshops 1":"images/workshop1.jpg",
+ "Industrial Visits 1":"images/visit1.jpg",
+ "Competitions 1":"images/comp1.jpg",
+ "Sports 1":"images/sports1.jpg",
+ "Past Event 1":"images/past1.jpg"
+};
+
+var LATEST=[
+  {
+    t: "ChemE Genesis", 
+    d: "An introductory flagship program welcoming new chemical engineering minds to innovation and community.", 
+    img: "images/event/generics.jpeg"
+  },
+  {
+    t: "AIChE Summit", 
+    d: "A premier national gathering uniting chemical engineers for technical talks, competitions, and professional networking.", 
+    img: "images/event/summit.jpeg"
+  },
+  {
+    t: "K-12 Session", 
+    d: "A STEM outreach initiative inspiring young school students with hands-on science and engineering fundamentals.", 
+    img: "images/event/k12.jpeg"
+  }
+];
+
+
 function img(t,i,w,h){if(REAL[t])return REAL[t];var c=COL[(i||0)%6];w=w||800;h=h||600;return "data:image/svg+xml;utf8,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+c[0]+'"/><stop offset="1" stop-color="'+c[1]+'"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/><text x="50%" y="50%" fill="#fff" font-family="sans-serif" font-size="'+Math.round(w/16)+'" text-anchor="middle" dominant-baseline="middle" opacity=".9">'+t+'</text></svg>')}
 function av(i){return img("👤",i,200,200)}
 function card(ic,t,d,x){return '<div class="card"><div class="ic">'+ic+'</div><h3>'+t+'</h3><p>'+d+'</p>'+(x?'<p><small>'+x+'</small></p>':'')+'</div>'}
@@ -10,22 +74,35 @@ function grid(a){return '<div class="grid">'+a.join("")+'</div>'}
 function hdr(t,s){return '<div class="hdr"><h1>'+t+'</h1><p>'+s+'</p></div>'}
 function sec(t,l){return '<h2>'+t+'</h2>'+(l?'<p class="lead">'+l+'</p>':'')}
 function per(n,r,i){return '<div class="card person"><img src="'+av(i)+'" alt=""><h3>'+n+'</h3><p>'+r+'</p></div>'}
-var DEMO='<div class="note">✏️ Demo content: replace names, dates and text with your chapter’s real information.</div>';
+
+var DEMO='<div class="note"></div>';
+
+
 var SL=[["UPCOMING EVENT","National AIChE Summit 2026","Biggest meetup of chemical engineers · 5 Dec · 10:00 AM · JUST Campus",REG,"Register Now"],["WORKSHOPS & SEMINARS","Learn From Experts","Technical workshops, expert talks and knowledge-sharing sessions.","#workshops-seminars","See Workshops"],["INDUSTRIAL VISITS","Meet Real-World Chemical Engineering","Explore industries and understand how real processes work.","#gallery","View Gallery"]];
+
 var GC={"Events":6,"Workshops":6,"Industrial Visits":6,"Competitions":6,"Sports":6};
 var MENU=[["home","Home"],["about","About Us"],["team","Our Team",[["executive-committee","Executive Committee"],["program-committee","Program Committee"],["previous-committee","Previous Committee"]]],["events","Events & Activities",[["upcoming-events","Upcoming"],["past-events","Past Events"],["workshops-seminars","Workshops & Seminars"]]],["gallery","Gallery"]];
 var P={
+
+ // Home
+
 home:function(){
- var s=SL.map(function(x,i){return '<div class="slide"><img src="'+img(x[1],i,1400,700)+'" alt=""><div><span class="tag">'+x[0]+'</span><h1>'+x[1]+'</h1><p>'+x[2]+'</p><a class="btn" href="'+x[3]+'"'+(i==0?' target="_blank" rel="noopener"':'')+'>'+x[4]+'</a>'+(i==0?'<a class="btn o" href="#upcoming-events">Details</a>':'')+'</div></div>'}).join("");
+ var s=SL.map(function(x,i){return '<div class="slide"><img src="'+(SLIDE_IMG[i]||img(x[1],i,1400,700))+'" alt=""><div> <span class="tag">'+x[0]+'</span><h1>'+x[1]+'</h1><p>'+x[2]+'</p><a class="btn" href="'+x[3]+'"'+(i==0?' target="_blank" rel="noopener"':'')+'>'+x[4]+'</a>'+(i==0?'<a class="btn o" href="#upcoming-events">Details</a>':'')+'</div></div>'}).join("");
  return '<div class="slider"><div class="slides" id="sl">'+s+'</div><button class="arr" style="left:8px" id="pv">‹</button><button class="arr" style="right:8px" id="nx">›</button><div class="dots" id="dt">'+SL.map(function(){return '<i></i>'}).join("")+'</div></div>'+
  '<div class="cdw"><b>⏳ National AIChE Summit 2026 starts in</b><div class="cd" id="cd"></div></div><main>'+
  sec("About AIChE JUST","We are the AIChE Student Chapter at Jashore University of Science and Technology (JUST), a community of passionate chemical engineering students dedicated to learning, innovation, and professional growth. Through workshops, seminars, industrial visits and various activities, we aim to bridge the gap between academia and industry.")+
- '<div class="stats">'+[["50+","Members"],["20+","Events"],["10+","Workshops"],["5+","Industrial Visits"]].map(function(x){return '<div class="card"><b>'+x[0]+'</b>'+x[1]+'</div>'}).join("")+'</div>'+
+ '<div class="stats">'+[["90+","Members"],["10+","Events"],["5+","Workshops"],["2+","Industrial Visits"]].map(function(x){return '<div class="card"><b>'+x[0]+'</b>'+x[1]+'</div>'}).join("")+'</div>'+
  sec("Our Mission & Vision")+grid([card("🎯","Our Mission","To promote knowledge, innovation, and leadership in chemical engineering by creating opportunities for students to learn, explore new ideas, develop practical skills, and contribute to technological advancement."),card("🚀","Our Vision","To build a vibrant and inclusive community of future chemical engineers who are passionate about innovation, committed to lifelong learning, and prepared to make a positive impact on industry and society.")])+
  sec("What We Do","Empowering future chemical engineers through learning, collaboration, innovation and professional development.")+grid([card("🎓","Workshops & Seminars","Technical workshops, expert talks and knowledge-sharing sessions."),card("🏆","Technical Competitions","Creativity, teamwork and problem-solving through technical challenges."),card("🤝","Networking & Career","Connections with alumni, professionals, researchers, industry experts and other chapters."),card("⚽","Sports","Friendly tournaments that build teamwork and community."),card("🔬","Research & Innovation","Scientific curiosity, research activities and innovative solutions."),card("🏭","Industrial Visits","Explore industries and real-world chemical engineering processes.")])+
  sec("Explore Chemical Engineering","Areas our chapter activities connect with.")+grid([card("🛡️","Process Safety","Safer plants, safer people."),card("🌱","Sustainability","Green processes and cleaner energy."),card("💻","Process Simulation","Aspen, MATLAB and modelling skills."),card("⚡","Energy & Environment","Energy systems and pollution control."),card("💊","Pharma & Biochem","Bioprocess and pharmaceutical engineering."),card("🧪","Materials & Polymers","Advanced materials and product design.")])+
- sec("Latest Activities & Events","Discover our recent programs, workshops, achievements and student activities.")+'<div class="grid">'+[0,1,2].map(function(i){return '<div class="card"><img src="'+img("Event "+(i+1),i)+'" alt=""><h3>Event Title '+(i+1)+'</h3><p>Short description of the event.</p></div>'}).join("")+'</div><p style="text-align:center"><a href="#upcoming-events">View all events →</a></p>'+
- sec("Why Join Us?")+grid([card("📚","Learn","Skills beyond the classroom."),card("🌐","Network","Alumni, industry and other chapters."),card("🏅","Lead","Organize events and grow as a leader.")])+DEMO+'</main>'},
+ sec("Latest Activities & Events","Discover our recent programs, workshops, achievements and student activities.")+
+
+//  add latest image
+ '<div class="grid">'+LATEST.map(function(e){return '<div class="card"><img src="'+(e.img||img(e.t,0))+'" alt=""><h3>'+e.t+'</h3><p>'+e.d+'</p></div>'}).join("")+'</div><p style="text-align:center"><a href="#upcoming-events">View all events →</a></p>'+
+ sec("Why Join Us?")+grid([card("📚","Learn","Skills beyond the classroom."),card("🌐","Network","Alumni, industry and other chapters."),card("🏅","Lead","Organize events and grow as a leader.")])+'</main>'},
+
+//  about
+
 about:function(){return hdr("About Us","AIChE Student Chapter · Jashore University of Science and Technology")+'<main>'+sec("Who We Are","We are a community of chemical engineering students at JUST, affiliated with the American Institute of Chemical Engineers (AIChE), the global professional society for chemical engineers.")+
  grid([card("🎯","Our Mission","To promote knowledge, innovation, and leadership in chemical engineering by creating opportunities for students to learn, explore new ideas, develop practical skills, and contribute to technological advancement."),card("🚀","Our Vision","To build a vibrant and inclusive community of future chemical engineers who are passionate about innovation, committed to lifelong learning, and prepared to make a positive impact on industry and society."),card("💎","Our Values","Learning · Innovation · Teamwork · Integrity · Service to society")])+
  sec("Our Objectives")+grid([card("1️⃣","Bridge academia and industry",""),card("2️⃣","Build technical and soft skills",""),card("3️⃣","Encourage research and innovation",""),card("4️⃣","Create a strong professional network","")])+
@@ -33,15 +110,26 @@ about:function(){return hdr("About Us","AIChE Student Chapter · Jashore Univers
  sec("Founders")+grid([per("Founder Name","Founding President",1),per("Founder Name","Founding Secretary",2),per("Founder Name","Founding Member",3)])+
  sec("Faculty Advisors")+grid([per("Dr. / Prof. Name","Chief Advisor",4),per("Dr. / Prof. Name","Faculty Advisor",5)])+
  sec("Organization","JUST AIChE is run by three committees working under faculty guidance.")+grid([card("👑","Executive Committee","Leads the chapter and sets yearly plans."),card("🧩","Program Committee","Plans and runs events and activities."),card("🕰️","Previous Committee","Past leaders who built the chapter.")])+DEMO+'</main>'},
+
+//  Team
+
 team:function(){return P["executive-committee"]()},
 "executive-committee":function(){return hdr("Our Team","Executive Committee")+tabs("executive-committee")+'<main>'+grid([per("Name","President",1),per("Name","Vice President",2),per("Name","General Secretary",3),per("Name","Treasurer",4),per("Name","Joint Secretary",5),per("Name","Organizing Secretary",0)])+DEMO+'</main>'},
 "program-committee":function(){return hdr("Our Team","Program Committee")+tabs("program-committee")+'<main>'+grid([per("Name","Event Management Lead",1),per("Name","Design & Media Lead",2),per("Name","Web & IT Lead",3),per("Name","Publicity Lead",4),per("Name","Research Lead",5),per("Name","Sports & Cultural Lead",0)])+DEMO+'</main>'},
 "previous-committee":function(){return hdr("Our Team","Previous Committee")+tabs("previous-committee")+'<main><div class="tl"><div><b>2025</b><br>President: Name · General Secretary: Name</div><div><b>2024</b><br>President: Name · General Secretary: Name</div><div><b>2023</b><br>President: Name · General Secretary: Name</div></div>'+DEMO+'</main>'},
 events:function(){return P["upcoming-events"]()},
+
+// event-activities
+
 "upcoming-events":function(){return hdr("Events & Activities","Upcoming Events")+tabs("upcoming-events")+'<main><div class="grid"><div class="card"><img src="'+img("AIChE Summit 2026",0)+'" alt=""><h3>National AIChE Summit 2026</h3><p>Biggest meetup of chemical engineers.</p><p>📅 5 Dec · 🕒 10:00 AM · 📍 JUST Campus</p><p><a class="btn" style="background:var(--brand);color:#fff" href="'+REG+'" target="_blank" rel="noopener">Register Now</a></p></div></div></main>'},
 "past-events":function(){return hdr("Events & Activities","Past Events")+tabs("past-events")+'<main>'+grid([0,1,2,3,4,5].map(function(i){return '<div class="card"><img src="'+img("Past Event "+(i+1),i)+'" alt=""><h3>Event Title '+(i+1)+'</h3><p>Short description.</p><p><small>📅 Date · 📍 Place</small></p></div>'}))+DEMO+'</main>'},
 "workshops-seminars":function(){return hdr("Events & Activities","Workshops & Seminars")+tabs("workshops-seminars")+'<main>'+grid([0,1,2,3].map(function(i){return '<div class="card"><img src="'+img(i%2?"Seminar":"Workshop",i+2)+'" alt=""><h3>'+(i%2?"Seminar":"Workshop")+' Title</h3><p>Topic, speaker and key takeaways.</p><p><small>📅 Date</small></p></div>'}))+DEMO+'</main>'},
-gallery:function(){var k=Object.keys(GC);return hdr("Gallery","Moments from our events, visits and activities")+'<main><div class="sub" id="gf"><span class="chip on" data-c="All">All</span>'+k.map(function(c){return '<span class="chip" data-c="'+c+'">'+c+'</span>'}).join("")+'</div><div class="gal" id="gg">'+k.map(function(c,ci){var a=[];for(var i=0;i<GC[c];i++)a.push('<img data-cat="'+c+'" src="'+img(c+" "+(i+1),ci+i)+'" alt="'+c+'">');return a.join("")}).join("")+'</div><div class="note">📷 Replace demo images with real photos by editing the image links.</div></main>'}};
+
+// gallery
+
+gallery:function(){var k=Object.keys(GALLERY);return hdr("Gallery","Moments from our events, visits and activities")+'<main><div class="sub" id="gf"><span class="chip on" data-c="All">All</span>'+k.map(function(c){return '<span class="chip" data-c="'+c+'">'+c+'</span>'}).join("")+'</div><div class="gal" id="gg">'+k.map(function(c,ci){var list=GALLERY[c].length?GALLERY[c]:[null,null,null];return list.map(function(p,i){return '<img data-cat="'+c+'" src="'+(p||img(c+" "+(i+1),ci+i))+'" alt="'+c+'" loading="lazy">'}).join("")}).join("")+'</div></main>'}};
+
+
 function tabs(r){var m=MENU.filter(function(x){return x[2]&&x[2].some(function(s){return s[0]==r})})[0];return '<div class="sub">'+m[2].map(function(s){return '<a class="'+(s[0]==r?"on":"")+'" href="#'+s[0]+'">'+s[1]+'</a>'}).join("")+'</div>'}
 function par(r){return MENU.filter(function(m){return m[0]==r||(m[2]&&m[2].some(function(s){return s[0]==r}))})[0]||MENU[0]}
 var T;
@@ -53,7 +141,8 @@ function render(){var r=(location.hash||"#home").slice(1);if(!P[r])r="home";var 
  if(r=="gallery")gal()}
 function slider(){var i=0,n=SL.length,s=document.getElementById("sl"),d=document.querySelectorAll("#dt i");
  function go(k){i=(k+n)%n;s.style.transform="translateX(-"+i*100+"%)";d.forEach(function(x,j){x.className=j==i?"on":""})}
- go(0);document.getElementById("pv").onclick=function(){go(i-1)};document.getElementById("nx").onclick=function(){go(i+1)};
+ go(0);
+ document.getElementById("pv").onclick=function(){go(i-1)};document.getElementById("nx").onclick=function(){go(i+1)};
  d.forEach(function(x,j){x.onclick=function(){go(j)}});T=setInterval(function(){go(i+1)},5000)}
 function tick(){var el=document.getElementById("cd");if(!el)return;var d=new Date("2026-12-05T10:00:00+06:00")-new Date();
  if(d<0){el.innerHTML="<b>The Summit is live! 🎉</b>";return}

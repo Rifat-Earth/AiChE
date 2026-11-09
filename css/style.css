@@ -7,8 +7,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 a{color:var(--brand)}
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:25;background:var(--card);border-bottom:1px solid var(--line)}
 .bar{max-width:1100px;margin:auto;display:flex;align-items:center;padding:10px 16px;gap:8px}
+
 .logo{font-weight:800;font-size:1.1rem;color:var(--brand);text-decoration:none;margin-right:auto}
-.logo small{display:block;font-weight:500;font-size:.62rem;color:var(--mute);letter-spacing:.04em}
+.logo small{display:block;font-weight:500;font-size:.62rem;color:var(--mute); 
+letter-spacing:.04em}
+
 #menu{display:flex;gap:2px}
 #menu a{color:var(--ink);text-decoration:none;padding:7px 12px;border-radius:8px;font-size:.92rem}
 #menu a:hover,#menu a.on{background:var(--bg);color:var(--brand)}
@@ -53,3 +56,5 @@ footer{background:#0a2540;color:#c6d4e4;padding:40px 18px 20px}
 .fg{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:26px}
 footer h4{color:#fff;margin:0 0 10px}footer a{color:#c6d4e4;display:block;text-decoration:none;padding:2px 0}footer a:hover{color:#fff}
 .cp{text-align:center;border-top:1px solid #213c5a;margin-top:26px;padding-top:16px;font-size:.85rem}
+
+
